@@ -22,7 +22,7 @@ jobs:
 
       - name: "CD to workspace"
         run: |
-          cd ${{ github.workspace }}
+          cd '${{ github.workspace }}'
           ls
 
       - name: "autoreconf"
