@@ -15,7 +15,7 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: autotools mingw-w64-gcc
+          install: autotools base-devel gcc
 
       - name: "Checkout repo"
         uses: actions/checkout@v3
