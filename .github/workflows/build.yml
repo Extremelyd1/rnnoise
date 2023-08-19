@@ -1,0 +1,77 @@
+name: Build binaries
+
+on: push
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: "Checkout repo"
+        uses: actions/checkout@v3
+
+      - name: "Compile binary"
+        run: |
+          ./autogen.sh
+          ./configure
+          make
+
+      - name: "List library files"
+        run: |
+          ls .libs
+
+      - name: "Upload binary"
+        uses: actions/upload-artifact@v3
+        with:
+          name: Windows binary
+          path: ${{ github.workspace }}\.libs\librnnoise.dll
+
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repo"
+        uses: actions/checkout@v3
+
+      - name: "Compile binary"
+        run: |
+          ./autogen.sh
+          ./configure
+          make
+
+      - name: "List library files"
+        run: |
+          ls .libs
+
+      - name: "Upload binary"
+        uses: actions/upload-artifact@v3
+        with:
+          name: Linux binary
+          path: ${{ github.workspace }}/.libs/librnnoise.so
+
+  build-mac:
+    runs-on: macos-latest
+
+    steps:
+      - name: "Checkout repo"
+        uses: actions/checkout@v3
+
+      - name: "Compile binary"
+        run: |
+          ./autogen.sh
+          ./configure
+          make
+
+      - name: "List library files"
+        run: |
+          ls .libs
+
+      - name: "Upload binary"
+        uses: actions/upload-artifact@v3
+        with:
+          name: MacOS binary
+          path: ${{ github.workspace }}/.libs/librnnoise.dylib
