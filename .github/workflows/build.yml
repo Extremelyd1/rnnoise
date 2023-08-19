@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Windows binary
-          path: ${{ github.workspace }}\.libs\librnnoise.dll
+          path: ${{ github.workspace }}\.libs\librnnoise.dll.a
 
   build-linux:
     runs-on: ubuntu-latest
