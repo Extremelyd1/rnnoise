@@ -6,18 +6,25 @@ jobs:
   build-win:
     runs-on: windows-latest
     
+    defaults:
+      run:
+        shell: msys2 {0}
+
     steps:
       - name: "Setup MSYS"
         uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: autotools
 
       - name: "Checkout repo"
         uses: actions/checkout@v3
 
       - name: "Compile binary"
         run: |
-          msys2 -c 'autoreconf -isf'
-          msys2 -c './configure'
-          msys2 -c 'make'
+          autoreconf
+          ./configure
+          make
 
       - name: "List library files"
         run: |
