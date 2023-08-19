@@ -20,10 +20,16 @@ jobs:
       - name: "Checkout repo"
         uses: actions/checkout@v3
 
-      - name: "Compile binary"
+      - name: "autoreconf"
         run: |
           autoreconf
+      
+      - name: "configure"
+        run: |
           ./configure
+
+      - name: "make"
+        run: |
           make
 
       - name: "List library files"
