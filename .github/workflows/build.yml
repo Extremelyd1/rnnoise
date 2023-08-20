@@ -8,80 +8,23 @@ jobs:
     
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash
 
     steps:
-      - name: "Setup MSYS"
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: autotools base-devel gcc
-
       - name: "Checkout repo"
         uses: actions/checkout@v3
 
       - name: "Compile binary"
         run: |
-          autoreconf -isf
-          ./configure
-          make
+          cmake -S . -B build
+          cmake --build build --config Release
 
       - name: "List library files"
         run: |
-          ls .libs
+          ls build
 
       - name: "Upload binary"
         uses: actions/upload-artifact@v3
         with:
           name: Windows binary
-          path: ${{ github.workspace }}\.libs\librnnoise-0.dll
-
-  build-linux:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: "Checkout repo"
-        uses: actions/checkout@v3
-
-      - name: "Compile binary"
-        run: |
-          ./autogen.sh
-          ./configure
-          make
-
-      - name: "List library files"
-        run: |
-          ls .libs
-
-      - name: "Upload binary"
-        uses: actions/upload-artifact@v3
-        with:
-          name: Linux binary
-          path: ${{ github.workspace }}/.libs/librnnoise.so
-
-  build-mac:
-    runs-on: macos-latest
-
-    steps:
-      - name: "Checkout repo"
-        uses: actions/checkout@v3
-
-      - name: "Install automake"
-        run: |
-          brew install automake
-
-      - name: "Compile binary"
-        run: |
-          ./autogen.sh
-          ./configure
-          make
-
-      - name: "List library files"
-        run: |
-          ls .libs
-
-      - name: "Upload binary"
-        uses: actions/upload-artifact@v3
-        with:
-          name: MacOS binary
-          path: ${{ github.workspace }}/.libs/librnnoise.dylib
+          path: ${{ github.workspace }}\build\Release\rnnoise.dll
