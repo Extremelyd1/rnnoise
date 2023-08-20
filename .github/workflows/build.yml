@@ -21,7 +21,7 @@ jobs:
 
       - name: "List library files"
         run: |
-          ls build\Release
+          ls build/Release
 
       - name: "Upload binary"
         uses: actions/upload-artifact@v3
