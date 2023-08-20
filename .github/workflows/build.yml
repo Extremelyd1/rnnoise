@@ -16,7 +16,7 @@ jobs:
 
       - name: "Compile binary"
         run: |
-          cmake -S . -B build
+          cmake -S . -B build -D BUILD_SHARED_LIBS ON
           cmake --build build --config Release
 
       - name: "List library files"
